@@ -1,0 +1,29 @@
+DECVAR
+    { a1 := DOUBLE; b1 := INTEGER; }
+    { b2 := DOUBLE; c3 := INTEGER; c4 := STRING; }
+ENDDECVAR
+
+PROGRAM.SECTION
+
+a1 ::= 100;
+b1 ::= 200;
+b2 ::= 300;
+c3 ::= 100;
+c4 ::= "soy un string";
+
+WHILE (a1 <= b1 && b2 == c3) {
+    WRITE "Iniciando bucle";
+
+    IF (c4 == 15) {
+        IF (c3 >= 14) {
+            a1 ::= 500;
+            WRITE "Hola Mundo";
+        };
+    };
+
+    WRITE "Hola que tal";
+
+    ? WRITE "Condicion IF UNARIO cumplida";
+};
+
+ENDPROGRAM.SECTION

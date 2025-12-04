@@ -1,0 +1,118 @@
+PROGRAM_SECTION
+
+// SHOWS antes de las declaraciones
+SHOW ("=== INICIO DEL PROGRAMA ===");
+SHOW (2024);
+SHOW (3.14);
+SHOW ("Preparando sistema");
+
+// DECLARACIONES
+DECVAR
+    edad := INTEGER;
+    promedio := DOUBLE;
+    nombre := STRING;
+    activo := INTEGER;
+    saldo := DOUBLE;
+    descuento := DOUBLE;
+    contador := INTEGER;
+    i := INTEGER;
+    mensaje := STRING;
+    categoria := STRING;
+ENDDECVAR
+
+// ASIGNACIONES
+SHOW ("=== ASIGNANDO VALORES ===");
+
+edad ::= 25;
+promedio ::= 7.8;
+nombre ::= "Carlos Lopez";
+activo ::= 1;
+saldo ::= 1200.75;
+
+// EXPRESIONES
+SHOW ("=== EXPRESIONES ===");
+
+edad ::= edad + 1;
+SHOW ("Nueva edad:");
+SHOW (edad);
+
+descuento ::= (saldo * 0.15) + 50;
+SHOW ("Descuento calculado:");
+SHOW (descuento);
+
+saldo ::= saldo - descuento + 100;
+SHOW ("Saldo actualizado:");
+SHOW (saldo);
+
+// CONDICIONES BÁSICAS
+SHOW ("=== CONDICIONES ===");
+
+IF (edad >= 18) THEN {
+    SHOW ("Es mayor de edad");
+}
+
+IF (promedio > 6.0) THEN {
+    mensaje ::= "Aprobado";
+    SHOW (mensaje);
+} ELSE {
+    mensaje ::= "Reprobado";
+    SHOW (mensaje);
+}
+
+IF (saldo > 1000) THEN {
+    SHOW ("Saldo suficiente");
+}
+
+// OPERADORES LÓGICOS
+
+IF (edad > 20 && saldo > 500) THEN {
+    SHOW ("Cliente calificado");
+}
+
+IF (promedio > 8 || activo = 1) THEN {
+    SHOW ("Buen desempeño o activo");
+}
+
+// IF UNARIO (el tema de mi grupo)
+SHOW ("=== IF UNARIO ===");
+
+categoria ::= ? (saldo > 1500, "Premium", "Regular");
+SHOW ("Categoria del cliente:");
+SHOW (categoria);
+
+
+// CICLO REPEAT
+
+contador ::= 1;
+SHOW ("Contando del 1 al 3:");
+REPEAT {
+    SHOW (contador);
+    contador ::= contador + 1;
+} WHILE (contador <= 3);
+
+// CÁLCULOS FINALES
+
+promedio ::= (promedio + 1.0) / 2;
+SHOW ("Promedio ajustado:");
+SHOW (promedio);
+
+IF (edad > 0 && saldo > 0) THEN {
+    SHOW ("Datos validos");
+}
+
+// RESUMEN
+SHOW ("=== RESUMEN ===");
+SHOW ("Nombre:");
+SHOW (nombre);
+SHOW ("Edad:");
+SHOW (edad);
+SHOW ("Saldo:");
+SHOW (saldo);
+SHOW ("Promedio:");
+SHOW (promedio);
+SHOW ("Categoria:");
+SHOW (categoria);
+
+SHOW ("=== PROGRAMA FINALIZADO ===");
+
+ENDPROGRAM_SECTION

@@ -1,0 +1,19 @@
+Nombre                                             Token           Tipo                 Valor                                              Long 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+a1                                                 ID              _                    _                                                  _    
+b1                                                 ID              _                    _                                                  _    
+b2                                                 ID              _                    _                                                  _    
+c3                                                 ID              _                    _                                                  _    
+c4                                                 ID              _                    _                                                  _    
+_100                                               CTE_E           _                    100                                                _    
+_200                                               CTE_E           _                    200                                                _    
+_300                                               CTE_E           _                    300                                                _    
+_100                                               CTE_E           _                    100                                                _    
+_"soy un string"                                   CTE_STR         _                    "soy un string"                                    15   
+_"Iniciando bucle"                                 CTE_STR         _                    "Iniciando bucle"                                  17   
+_15                                                CTE_E           _                    15                                                 _    
+_14                                                CTE_E           _                    14                                                 _    
+_500                                               CTE_E           _                    500                                                _    
+_"Hola Mundo"                                      CTE_STR         _                    "Hola Mundo"                                       12   
+_"Hola que tal"                                    CTE_STR         _                    "Hola que tal"                                     14   
+_"Condicion IF UNARIO cumplida"                    CTE_STR         _                    "Condicion IF UNARIO cumplida"                     30   

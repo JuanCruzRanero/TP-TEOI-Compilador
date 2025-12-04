@@ -1,0 +1,313 @@
+package analizadorLexico;
+import java_cup.runtime.*;
+
+parser code {:
+    private void mostrarRegla(String mensaje) {
+        System.out.println(mensaje);
+    }
+
+    public void setTipo(String nombre, String tipo) {
+        try {
+            ((Lexico)this.getScanner()).setTipo(nombre, tipo);
+        } catch (Exception e) {
+            System.err.println("Error al asignar tipo: " + e.getMessage());
+        }
+    }
+:}
+
+terminal IF, ELSE, THEN, WHILE, DECVAR, ENDDECVAR, PROGRAM_SECTION, ENDPROGRAM_SECTION;
+terminal REPEAT, STRVAR, NUMVAR, SHOW, STRING, INTEGER, DOUBLE, BEGIN, END;
+terminal OP_SUMA, OP_RESTA, OP_MULTI, OP_DIV;
+terminal OPL_AND, OPL_OR, OPL_NOT, OP_DIST, OP_IGUAL;
+terminal OP_MENOR, OP_MAYOR, OP_MAYOR_IG, OP_MENOR_IG;
+terminal OP_ASIGNACION, OP_DECLARACION, IF_UNARIO;
+terminal A_PARENT, C_PARENT, A_LLAVE, C_LLAVE, P_Y_C, COMA;
+terminal CTE_E, CTE_F, CTE_STR, CTE_B, CTE_H, ID;
+
+non terminal programa, programa_contenido, declaraciones, lista_declaraciones, declaracion, tipo;
+non terminal sentencias, sentencia, asignacion, if_unario_expr, ciclo_repeat;
+non terminal if_clasico, condicion, expresion, termino, factor;
+non terminal condicion_or, condicion_and, condicion_not, condicion_base;
+
+start with programa;
+
+/* ==================== REGLAS GRAMATICALES ==================== */
+
+programa ::=
+    PROGRAM_SECTION programa_contenido:pc ENDPROGRAM_SECTION
+    {:
+        mostrarRegla("[1] programa → PROGRAM_SECTION programa_contenido ENDPROGRAM_SECTION");
+    :};
+
+programa_contenido ::=
+    sentencias:s1 declaraciones:d sentencias:s2
+    {:
+        mostrarRegla("[2] programa_contenido → sentencias declaraciones sentencias");
+    :}
+    |
+    declaraciones:d sentencias:s
+    {:
+        mostrarRegla("[3] programa_contenido → declaraciones sentencias");
+    :}
+    |
+    sentencias:s
+    {:
+        mostrarRegla("[4] programa_contenido → sentencias");
+    :};
+
+declaraciones ::=
+    DECVAR lista_declaraciones:l ENDDECVAR
+    {:
+        mostrarRegla("[5] declaraciones → DECVAR lista_declaraciones ENDDECVAR");
+    :};
+
+lista_declaraciones ::=
+    declaracion:d P_Y_C lista_declaraciones:l
+    {:
+        mostrarRegla("[6] lista_declaraciones → declaracion ; lista_declaraciones");
+    :}
+    |
+    declaracion:d P_Y_C
+    {:
+        mostrarRegla("[7] lista_declaraciones → declaracion ;");
+    :};
+
+declaracion ::=
+    ID:i OP_DECLARACION tipo:t
+    {:
+        mostrarRegla("[8] declaracion → ID := tipo");
+        setTipo(i.toString(), t.toString());
+    :};
+
+tipo ::=
+    INTEGER
+    {:
+        mostrarRegla("[9] tipo → INTEGER");
+        RESULT = "INTEGER";
+    :}
+    |
+    DOUBLE
+    {:
+        mostrarRegla("[10] tipo → DOUBLE");
+        RESULT = "DOUBLE";
+    :}
+    |
+    STRING
+    {:
+        mostrarRegla("[11] tipo → STRING");
+        RESULT = "STRING";
+    :};
+
+sentencias ::=
+    sentencia:s sentencias:ss
+    {:
+        mostrarRegla("[12] sentencias → sentencia sentencias");
+    :}
+    |
+    sentencia:s
+    {:
+        mostrarRegla("[13] sentencias → sentencia");
+    :};
+
+sentencia ::=
+    asignacion:a P_Y_C
+    {:
+        mostrarRegla("[14] sentencia → asignacion ;");
+    :}
+    |
+    ciclo_repeat:r
+    {:
+        mostrarRegla("[15] sentencia → ciclo_repeat");
+    :}
+    |
+    SHOW A_PARENT expresion:e C_PARENT P_Y_C
+    {:
+        mostrarRegla("[16] sentencia → SHOW (expresion) ;");
+    :}
+    |
+    if_clasico:i
+    {:
+        mostrarRegla("[17] sentencia → if_clasico");
+    :}
+    |
+    if_unario_expr:iu P_Y_C
+    {:
+        mostrarRegla("[18] sentencia → if_unario_expr ;");
+    :};
+
+asignacion ::=
+    ID:i OP_ASIGNACION expresion:e
+    {:
+        mostrarRegla("[19] asignacion → ID ::= expresion");
+    :};
+
+if_unario_expr ::=
+    ID:i OP_ASIGNACION IF_UNARIO A_PARENT condicion:c COMA expresion:e1 COMA expresion:e2 C_PARENT
+    {:
+        mostrarRegla("[20] if_unario_expr → ID ::= ? (condicion, expresion, expresion)");
+    :};
+
+ciclo_repeat ::=
+    REPEAT A_LLAVE sentencias:s C_LLAVE WHILE A_PARENT condicion:c C_PARENT P_Y_C
+    {:
+        mostrarRegla("[21] ciclo_repeat → REPEAT {sentencias} WHILE (condicion) ;");
+    :};
+
+if_clasico ::=
+    IF A_PARENT condicion:c C_PARENT THEN A_LLAVE sentencias:s1 C_LLAVE ELSE A_LLAVE sentencias:s2 C_LLAVE
+    {:
+        mostrarRegla("[22] if_clasico → IF (condicion) THEN {sentencias} ELSE {sentencias}");
+    :}
+    |
+    IF A_PARENT condicion:c C_PARENT THEN A_LLAVE sentencias:s C_LLAVE
+    {:
+        mostrarRegla("[23] if_clasico → IF (condicion) THEN {sentencias}");
+    :};
+
+condicion ::=
+    condicion_or:co
+    {:
+        mostrarRegla("[24] condicion → condicion_or");
+    :};
+
+condicion_or ::=
+    condicion_and:ca OPL_OR condicion_or:co
+    {:
+        mostrarRegla("[25] condicion_or → condicion_and || condicion_or");
+    :}
+    |
+    condicion_and:ca
+    {:
+        mostrarRegla("[26] condicion_or → condicion_and");
+    :};
+
+condicion_and ::=
+    condicion_not:cn OPL_AND condicion_and:ca
+    {:
+        mostrarRegla("[27] condicion_and → condicion_not && condicion_and");
+    :}
+    |
+    condicion_not:cn
+    {:
+        mostrarRegla("[28] condicion_and → condicion_not");
+    :};
+
+condicion_not ::=
+    OPL_NOT condicion_base:cb
+    {:
+        mostrarRegla("[29] condicion_not → ! condicion_base");
+    :}
+    |
+    condicion_base:cb
+    {:
+        mostrarRegla("[30] condicion_not → condicion_base");
+    :};
+
+condicion_base ::=
+    expresion:e1 OP_MAYOR expresion:e2
+    {:
+        mostrarRegla("[31] condicion_base → expresion > expresion");
+    :}
+    |
+    expresion:e1 OP_MENOR expresion:e2
+    {:
+        mostrarRegla("[32] condicion_base → expresion < expresion");
+    :}
+    |
+    expresion:e1 OP_MAYOR_IG expresion:e2
+    {:
+        mostrarRegla("[33] condicion_base → expresion >= expresion");
+    :}
+    |
+    expresion:e1 OP_MENOR_IG expresion:e2
+    {:
+        mostrarRegla("[34] condicion_base → expresion <= expresion");
+    :}
+    |
+    expresion:e1 OP_IGUAL expresion:e2
+    {:
+        mostrarRegla("[35] condicion_base → expresion = expresion");
+    :}
+    |
+    expresion:e1 OP_DIST expresion:e2
+    {:
+        mostrarRegla("[36] condicion_base → expresion != expresion");
+    :}
+    |
+    A_PARENT condicion:c C_PARENT
+    {:
+        mostrarRegla("[37] condicion_base → (condicion)");
+    :};
+
+expresion ::=
+    expresion:e OP_SUMA termino:t
+    {:
+        mostrarRegla("[38] expresion → expresion + termino");
+    :}
+    |
+    expresion:e OP_RESTA termino:t
+    {:
+        mostrarRegla("[39] expresion → expresion - termino");
+    :}
+    |
+    termino:t
+    {:
+        mostrarRegla("[40] expresion → termino");
+    :};
+
+termino ::=
+    termino:t OP_MULTI factor:f
+    {:
+        mostrarRegla("[41] termino → termino * factor");
+    :}
+    |
+    termino:t OP_DIV factor:f
+    {:
+        mostrarRegla("[42] termino → termino / factor");
+    :}
+    |
+    factor:f
+    {:
+        mostrarRegla("[43] termino → factor");
+    :};
+
+factor ::=
+    ID
+    {:
+        mostrarRegla("[44] factor → ID");
+    :}
+    |
+    NUMVAR
+    {:
+        mostrarRegla("[45] factor → NUMVAR");
+    :}
+    |
+    CTE_E
+    {:
+        mostrarRegla("[46] factor → CTE_E");
+    :}
+    |
+    CTE_F
+    {:
+        mostrarRegla("[47] factor → CTE_F");
+    :}
+    |
+    CTE_B
+    {:
+        mostrarRegla("[48] factor → CTE_B");
+    :}
+    |
+    CTE_H
+    {:
+        mostrarRegla("[49] factor → CTE_H");
+    :}
+    |
+    CTE_STR
+    {:
+        mostrarRegla("[50] factor → CTE_STR");
+    :}
+    |
+    A_PARENT expresion:e C_PARENT
+    {:
+        mostrarRegla("[51] factor → (expresion)");
+    :};

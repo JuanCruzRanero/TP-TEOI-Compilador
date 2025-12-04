@@ -1,0 +1,66 @@
+Nombre                         Token        Tipo         Valor                Long    
+------------------------------------------------------------------------------
+=== INICIO DEL PROGRAMA ===    CTE_STR      _            === INICIO DEL PROGRAMA === 27      
+2024                           CTE_E        _            2024                 _       
+3.14                           CTE_F        _            3.14                 _       
+Preparando sistema             CTE_STR      _            Preparando sistema   18      
+edad                           ID           INTEGER      _                    _       
+promedio                       ID           DOUBLE       _                    _       
+nombre                         ID           STRING       _                    _       
+activo                         ID           INTEGER      _                    _       
+saldo                          ID           DOUBLE       _                    _       
+descuento                      ID           DOUBLE       _                    _       
+contador                       ID           INTEGER      _                    _       
+i                              ID           INTEGER      _                    _       
+mensaje                        ID           STRING       _                    _       
+categoria                      ID           STRING       _                    _       
+=== ASIGNANDO VALORES ===      CTE_STR      _            === ASIGNANDO VALORES === 25      
+25                             CTE_E        _            25                   _       
+7.8                            CTE_F        _            7.8                  _       
+Carlos Lopez                   CTE_STR      _            Carlos Lopez         12      
+1                              CTE_E        _            1                    _       
+1200.75                        CTE_F        _            1200.75              _       
+=== EXPRESIONES ===            CTE_STR      _            === EXPRESIONES ===  19      
+1                              CTE_E        _            1                    _       
+Nueva edad:                    CTE_STR      _            Nueva edad:          11      
+0.15                           CTE_F        _            0.15                 _       
+50                             CTE_E        _            50                   _       
+Descuento calculado:           CTE_STR      _            Descuento calculado: 20      
+100                            CTE_E        _            100                  _       
+Saldo actualizado:             CTE_STR      _            Saldo actualizado:   18      
+=== CONDICIONES ===            CTE_STR      _            === CONDICIONES ===  19      
+18                             CTE_E        _            18                   _       
+Es mayor de edad               CTE_STR      _            Es mayor de edad     16      
+6.0                            CTE_F        _            6.0                  _       
+Aprobado                       CTE_STR      _            Aprobado             8       
+Reprobado                      CTE_STR      _            Reprobado            9       
+1000                           CTE_E        _            1000                 _       
+Saldo suficiente               CTE_STR      _            Saldo suficiente     16      
+20                             CTE_E        _            20                   _       
+500                            CTE_E        _            500                  _       
+Cliente calificado             CTE_STR      _            Cliente calificado   18      
+8                              CTE_E        _            8                    _       
+1                              CTE_E        _            1                    _       
+Buen desempeño o activo        CTE_STR      _            Buen desempeño o activo 23      
+=== IF UNARIO ===              CTE_STR      _            === IF UNARIO ===    17      
+1500                           CTE_E        _            1500                 _       
+Premium                        CTE_STR      _            Premium              7       
+Regular                        CTE_STR      _            Regular              7       
+Categoria del cliente:         CTE_STR      _            Categoria del cliente: 22      
+1                              CTE_E        _            1                    _       
+Contando del 1 al 3:           CTE_STR      _            Contando del 1 al 3: 20      
+1                              CTE_E        _            1                    _       
+3                              CTE_E        _            3                    _       
+1.0                            CTE_F        _            1.0                  _       
+2                              CTE_E        _            2                    _       
+Promedio ajustado:             CTE_STR      _            Promedio ajustado:   18      
+0                              CTE_E        _            0                    _       
+0                              CTE_E        _            0                    _       
+Datos validos                  CTE_STR      _            Datos validos        13      
+=== RESUMEN ===                CTE_STR      _            === RESUMEN ===      15      
+Nombre:                        CTE_STR      _            Nombre:              7       
+Edad:                          CTE_STR      _            Edad:                5       
+Saldo:                         CTE_STR      _            Saldo:               6       
+Promedio:                      CTE_STR      _            Promedio:            9       
+Categoria:                     CTE_STR      _            Categoria:           10      
+=== PROGRAMA FINALIZADO ===    CTE_STR      _            === PROGRAMA FINALIZADO === 27      
